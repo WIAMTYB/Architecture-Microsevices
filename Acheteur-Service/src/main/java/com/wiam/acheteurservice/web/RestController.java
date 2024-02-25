@@ -5,6 +5,7 @@ import com.wiam.acheteurservice.config.GlobalConfig;
 import com.wiam.acheteurservice.entities.Acheteur;
 import com.wiam.acheteurservice.repositories.AcheteurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class RestController {
 
     @Autowired
     AcheteurConfig acheteurConfig;
+    @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;
 
     @GetMapping("/globalConfig")
     public GlobalConfig globalConfig(){
@@ -40,6 +43,42 @@ public class RestController {
         Acheteur e = acheteurRepository.findById(id).get();
         return e;
     }
+    @PutMapping("/acheteurs/{id}")
+    public Acheteur updateClient(@PathVariable Integer id,@RequestBody Acheteur acheteur){
+        Acheteur a = acheteurRepository.findById(id).orElseThrow(()-> new RuntimeException("Acheteur not found"));
+        a.setNom(acheteur.getNom());
+        a.setVille(acheteur.getVille());
+
+       kafkaTemplate.send("acheteur","acheteur"+id +" updated");
+
+        return acheteurRepository.save(a);
+    }
+    @PostMapping("/acheteurs")
+    public Acheteur saveClient(@RequestBody Acheteur acheteur){
+        Acheteur a = new Acheteur();
+        a.setNom(acheteur.getNom());
+        a.setVille(acheteur.getVille());
+        return acheteurRepository.save(a);
+    }
+    @DeleteMapping("/acheteurs/{id}")
+    public void deleteClient(@PathVariable Integer id){
+        acheteurRepository.deleteById(id);
+        kafkaTemplate.send("acheteur","acheteur "+id +" deleted");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      /*@PutMapping("/acheteurs/{id}")
     public void save(@PathVariable ("id") Integer id, @RequestBody Acheteur a){
@@ -62,4 +101,4 @@ public class RestController {
     }*/
 
 
-}
+

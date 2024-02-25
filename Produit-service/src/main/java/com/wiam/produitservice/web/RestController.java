@@ -5,6 +5,7 @@ import com.wiam.produitservice.config.ProduitConfig;
 import com.wiam.produitservice.entities.Produit;
 import com.wiam.produitservice.repositories.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,8 @@ public class RestController {
     @GetMapping("/produitConfig")
     public ProduitConfig produitConfig(){ return produitConfig;}
 
-    @GetMapping("/produits")
+    @GetMapping("/products")
+   //@PreAuthorize("hasAuthority('ADMIN')")
     public List<Produit> getAll(){
         return produitRepository.findAll();
     }

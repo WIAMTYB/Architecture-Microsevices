@@ -20,8 +20,8 @@ public class Vente {
     private Long idA;
     @Transient
     private Acheteur acheteur;
-    private Long idP;
-    @Transient
-    private Produit produit;
+   // private Long idP;
+   // @Transient
+   // private Produit produit;
 }
 

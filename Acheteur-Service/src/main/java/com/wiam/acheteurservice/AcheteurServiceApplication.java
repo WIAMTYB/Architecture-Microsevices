@@ -29,7 +29,7 @@ public class AcheteurServiceApplication {
                     .build());
 
             acheteurRepository.save(Acheteur.builder()
-                    .nom("Khaoula Jadimoussa")
+                    .nom("wiam taybi")
                     .ville("Rabat")
                     .build());
 

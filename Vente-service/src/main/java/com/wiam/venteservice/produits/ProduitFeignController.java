@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "PRODUIT-SERVICE")
+//@FeignClient(name = "PRODUIT-SERVICE")
 
 public interface ProduitFeignController {
-    @GetMapping("/produits")
+   /* @GetMapping("/produits")
     public List<Produit> findAll();
 
     @GetMapping("/produits/{id}")
     public Produit findBy(@PathVariable Long id);
+    @GetMapping("/produits")
+    public List<Produit> getAll();
+
+    @GetMapping("/produits/{id}")
+    public Produit getById(@PathVariable Long id);*/
 }
+

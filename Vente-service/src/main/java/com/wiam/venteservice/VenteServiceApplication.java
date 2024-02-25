@@ -26,61 +26,61 @@ public class VenteServiceApplication {
             venteRepository.save(Vente.builder()
                     .idVente(1L)
                     .idA(1L)
-                    .idP(1L)
+                    //.idP(1L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(2L)
                     .idA(2L)
-                    .idP(2L)
+                  //  .idP(2L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(3L)
                     .idA(3L)
-                    .idP(3L)
+                 //   .idP(3L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(4L)
                     .idA(4L)
-                    .idP(4L)
+                   // .idP(4L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(5L)
                     .idA(5L)
-                    .idP(5L)
+                    //.idP(5L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(6L)
                     .idA(6L)
-                    .idP(6L)
+                   // .idP(6L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(7L)
                     .idA(7L)
-                    .idP(7L)
+                   // .idP(7L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(8L)
                     .idA(8L)
-                    .idP(8L)
+                   // .idP(8L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(9L)
                     .idA(9L)
-                    .idP(9L)
+                   // .idP(9L)
                     .build());
 
             venteRepository.save(Vente.builder()
                     .idVente(10L)
                     .idA(10L)
-                    .idP(10L)
+                   // .idP(10L)
                     .build());
         };
     }

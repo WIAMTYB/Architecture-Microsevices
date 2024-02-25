@@ -6,13 +6,14 @@ import com.wiam.venteservice.Modele.Produit;
 import com.wiam.venteservice.acheteurs.AcheteurFeignController;
 import com.wiam.venteservice.config.GlobalConfig;
 import com.wiam.venteservice.config.VenteConfig;
+import com.wiam.venteservice.dto.VenteRequestDTO;
+import com.wiam.venteservice.dto.VenteResponceDTO;
 import com.wiam.venteservice.entities.Vente;
 import com.wiam.venteservice.produits.ProduitFeignController;
 import com.wiam.venteservice.repositories.VenteRepository;
+import com.wiam.venteservice.service.VenteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,68 +21,25 @@ import java.util.List;
 public class RestController {
 
     @Autowired
-    VenteRepository venteRepository;
-
-    @Autowired
-    private ProduitFeignController produitFeignController;
-
-    @Autowired
-    private AcheteurFeignController acheteurFeignController;
-
-    @Autowired
-    GlobalConfig globalConfig;
-
-    @Autowired
-    VenteConfig venteConfig;
-
-    @GetMapping("/globalConfig")
-    public GlobalConfig globalConfig(){ return globalConfig;}
-
-    @GetMapping("/venteConfig")
-    public  VenteConfig venteConfig(){ return venteConfig;}
+    VenteServiceInterface venteServiceInterface;
 
     @GetMapping("/ventes")
-    public List<Vente> getAll(){
-        List<Vente> lv = venteRepository.findAll();
-
-        List<Produit> lp = produitFeignController.findAll();
-
-        List<Acheteur> la = acheteurFeignController.findAll();
-
-        for (Vente v:lv){
-            for (Produit p:lp){
-                if (v.getIdP() == p.getIdP()){
-                    v.setProduit(p); break;
-                }
-            }
-        }
-
-        for (Vente v:lv){
-            for (Acheteur a:la){
-                if (v.getIdA() == a.getIdA()){
-                    v.setAcheteur(a); break;
-                }
-            }
-        }
-
-        return lv;
-    }
+    public List<VenteResponceDTO> getAll(){return venteServiceInterface.getAll();}
 
     @GetMapping("/ventes/{id}")
-    public Vente getById(@PathVariable Long id){
+    public VenteResponceDTO getById(@PathVariable("id") Long id){ return venteServiceInterface.getVenteById(id);}
 
-        Vente v = venteRepository.findById(id).get();
+    @PutMapping("/ventes/{id}")
+    public void update_Vente(@PathVariable ("id") Long id, @RequestBody VenteRequestDTO v){venteServiceInterface.update(id,v);}
 
-        Acheteur a = acheteurFeignController.findBy(v.getIdA());
-        v.setAcheteur(a);
-
-        Produit p = produitFeignController.findBy(v.getIdP());
-        v.setProduit(p);
-
-        return v;
+    @PostMapping("/ventes")
+    public void save_vente(@RequestBody VenteRequestDTO v){
+        venteServiceInterface.save(v);
     }
 
-
-
+    @DeleteMapping("/ventes/{id}")
+    public void delete_vente(@PathVariable ("id") Long id){
+        venteServiceInterface.delete(id);
+    }
 
 }

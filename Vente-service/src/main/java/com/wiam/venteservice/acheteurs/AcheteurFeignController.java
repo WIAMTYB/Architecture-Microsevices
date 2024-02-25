@@ -15,4 +15,9 @@ public interface AcheteurFeignController {
 
     @GetMapping("/acheteurs/{id}")
     public Acheteur findBy(@PathVariable Long id);
+    @GetMapping("/acheteurs")
+    public List<Acheteur> getAll();
+
+    @GetMapping("/acheteurs/{id}")
+    public Acheteur getById(@PathVariable Long id);
 }
